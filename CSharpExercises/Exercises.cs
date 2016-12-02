@@ -205,30 +205,29 @@ namespace CSharpExercises
         public static bool IsLeapYear(int date)
         {
             bool isLeap = false;
-            if (date%4 == 0)
+            if (date%4 == 0 && (date % 100 != 0 || date % 400 == 0))
             {
-                if (date%100 != 0 || date%400 == 0)
-                {
-                    return true;
-                }
+                return true;
             }
             return isLeap;
         }
         // 19. Create a method called MortgageCalculator that accepts 2 decimals representing loan balance and interest rate, an integer representing loan term in years, and an integer representing the payment period.
         /* Payment periods: 1 - Monthly, 2 - Bi-Monthly (Every 2 months) */
-        public static double MortgageCalculator(decimal p, double r, int y, int n)
+        public static double MortgageCalculator(decimal principle, decimal rate, int years, int yearlyPayments)
         {
             double monthlyPayment = 0;
-            double prin = decimal.ToDouble(p);
+            double p = decimal.ToDouble(principle);
+            double r = decimal.ToDouble(rate);
+            int y = years;
+            int n = yearlyPayments;
             if (n == 12)
             {
                 double numPayments = y * 12;
-                //monthlyPayment = p * ((rate * rateExp) / (rateExp - 1));
-                monthlyPayment = ((r / 1200) + (r / 1200) / (Math.Pow(1+(r / 1200),numPayments) - 1)) * prin;
+                monthlyPayment = ((r / 1200) + (r / 1200) / (Math.Pow(1+ (r / 1200), numPayments) - 1)) * p;
             } else
             {
                 double numPayments = y * 6;
-                monthlyPayment = ((r/1200) + (r/1200) / (Math.Pow(1 + (r / 1200), numPayments) - 1)) * prin;
+                monthlyPayment = ((r / 600) + (r / 600) / (Math.Pow(1 + (r / 600), numPayments) - 1)) * p;
             }
             return Math.Round(monthlyPayment,2);
         }
